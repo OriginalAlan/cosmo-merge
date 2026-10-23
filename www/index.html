@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0b0820">
+  <meta name="description" content="Fusioná objetos del espacio y creá tu propio universo.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Cosmo Merge">
+  <meta property="og:title" content="Cosmo Merge">
+  <meta property="og:description" content="Fusioná objetos del espacio y creá tu propio universo. ¿Llegás al Origen?">
+  <meta property="og:image" content="icon-512.png">
+  <title>Cosmo Merge</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon-192.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <header class="top">
+      <div class="money">
+        <div id="coins">🪙 0</div>
+        <div id="income">+0/s</div>
+      </div>
+      <div class="top-btns">
+        <button id="gemsBtn" class="icon-btn gems" aria-label="Tienda">💎 0</button>
+        <button id="bangBtn" class="icon-btn bang" aria-label="Big Bang">💥</button>
+        <button id="settingsBtn" class="icon-btn" aria-label="Ajustes">⚙️</button>
+      </div>
+    </header>
+
+    <div id="collection" class="collection"></div>
+
+    <button id="boostBtn" class="boost"></button>
+
+    <div id="hint" class="hint hidden"></div>
+    <div id="grid" class="grid"></div>
+
+    <div class="spawn">
+      <div id="spawnFill" class="spawn-fill"></div>
+      <span id="spawnText"></span>
+    </div>
+
+    <button id="buyBtn" class="buy"></button>
+
+    <div class="upgrades">
+      <button class="upg" data-u="speed"></button>
+      <button class="upg" data-u="spawn"></button>
+      <button class="upg" data-u="mult"></button>
+    </div>
+  </div>
+
+  <div id="fx"></div>
+  <div id="toast" class="toast"></div>
+  <div id="modal" class="modal hidden"><div id="modalCard" class="card"></div></div>
+
+  <script src="game.js"></script>
+</body>
+</html>

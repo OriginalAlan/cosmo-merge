@@ -1,0 +1,5 @@
+.DS_Store
+node_modules/
+# Otro proyecto (Mi Vida) y configuración local: no se publican
+vida/
+.claude/

@@ -7,7 +7,7 @@ Con 20–50 personas alcanza para la primera ronda.
 
 **Opción A — GitHub Pages (recomendada, se actualiza sola).** El repositorio tiene que ser público en una cuenta gratis.
 El archivo `.github/workflows/pages.yml` ya publica la carpeta `www/` cada vez que subís un cambio.
-Link final: `https://<tu-usuario>.github.io/cosmo-merge/`
+Publicado en **https://originalalan.github.io/cosmo-merge/** (repositorio: github.com/OriginalAlan/cosmo-merge).
 
 **Opción B — Netlify Drop (sin repositorio, 1 minuto).** Entrás a app.netlify.com/drop, arrastrás la carpeta `www/` y te da un link.
 Para actualizar, volvés a arrastrarla.
@@ -21,7 +21,7 @@ Sin la clave el juego anda igual, pero no te enterás de nada.
 
 ## 3. Mensaje para mandar a los testers
 > ¡Hola! Estoy haciendo un juego para celular y necesito gente que lo pruebe. Es gratis y dura lo que quieras.
-> 👉 [link]
+> 👉 https://originalalan.github.io/cosmo-merge/
 > Ideal: abrilo desde el celu y agregalo a la pantalla de inicio (en iPhone: Compartir → Agregar a inicio).
 > Jugá como jugarías cualquier juego, sin forzarte. Si un día no tenés ganas de abrirlo, ¡eso también me sirve!
 > Las compras **no cobran nada**: tocá las que comprarías de verdad, así sé qué vale la pena.

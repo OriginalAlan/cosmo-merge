@@ -4,7 +4,7 @@
 // Medí cualquier cambio con `node tools/simular.js` (simula semanas de juego de distintos jugadores).
 // Hoy: universo completo ~57 días gratis, ~44 días pagando USD 6, ~36 días pagando USD 20.
 const CFG = {
-  version: '0.6.0',
+  version: '0.6.1',
   testBuild: true,        // versión de prueba: lo muestra en ajustes y marca los eventos de analítica
   // Analítica (PostHog, gratis hasta 1M eventos/mes). Pegá acá la "Project API key" de tu proyecto.
   // Vacía = los eventos solo se ven en la consola.
@@ -477,9 +477,11 @@ function onMerge(i, level, byRobot) {
   }
 }
 
-// Fusiona el par de menor nivel del tablero. Devuelve { i, level } o null.
-function mergeLowestPair(skip) {
-  for (let l = 1; l < LEVELS.length; l++) {
+// Fusiona el par de MAYOR nivel del tablero. Devuelve { i, level } o null.
+// Si buscara el de menor nivel, los ✨ que caen todo el tiempo lo tendrían siempre ocupado
+// y nunca llegaría a fusionar los objetos grandes.
+function mergeHighestPair(skip) {
+  for (let l = LEVELS.length - 1; l >= 1; l--) {
     const idx = [];
     S.grid.forEach((x, i) => { if (x === l && i !== skip) idx.push(i); });
     if (idx.length >= 2) {
@@ -491,7 +493,7 @@ function mergeLowestPair(skip) {
 }
 
 function robotMerge() {
-  const m = mergeLowestPair(drag ? drag.from : -1);
+  const m = mergeHighestPair(drag ? drag.from : -1);
   if (!m) return;
   renderGrid();
   onMerge(m.i, m.level, true);
@@ -505,7 +507,7 @@ function offlineRobotWork(secs) {
     const empty = S.grid.findIndex((l, i) => !l && isOpen(i));
     if (empty >= 0) { S.grid[empty] = spawnLevel(); res.dropped++; }
     let m;
-    while ((m = mergeLowestPair(-1))) {
+    while ((m = mergeHighestPair(-1))) {
       res.merges++;
       S.stats.merges++;
       if (m.level > S.maxLevel) S.maxLevel = m.level;

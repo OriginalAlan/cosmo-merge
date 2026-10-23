@@ -18,7 +18,8 @@ self.addEventListener('fetch', (e) => {
   const url = new URL(e.request.url);
   if (e.request.method !== 'GET' || url.origin !== location.origin) return; // la analítica va directo a la red
   e.respondWith(
-    fetch(e.request)
+    // no-cache: siempre le pregunta al servidor si hay versión nueva (si no cambió, la respuesta es mínima).
+    fetch(e.request, { cache: 'no-cache' })
       .then((res) => {
         const copy = res.clone();
         caches.open(VERSION).then((c) => c.put(e.request, copy));

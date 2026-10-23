@@ -64,8 +64,10 @@ function simulate(profile, trial) {
   const income = () => R.grid.reduce((a, l) => (l ? a + inc(l) : a), 0) * mult();
   const put = (l) => { const i = R.grid.slice(0, cells()).indexOf(0); if (i < 0) return false; R.grid[i] = l; return true; };
   const points = () => (R.maxLevel < CFG.bangMinLevel ? 0 : Math.round(Math.pow(CFG.bangBase, R.maxLevel - CFG.bangMinLevel)));
-  const mergeOne = () => {
-    for (let l = 1; l < LEVELS; l++) {
+  // El jugador fusiona primero lo más chico; el robot, lo más grande (como en el juego).
+  const mergeOne = (highFirst) => {
+    for (let k = 1; k < LEVELS; k++) {
+      const l = highFirst ? LEVELS - k : k;
       const idx = R.grid.flatMap((x, i) => (x === l ? [i] : []));
       if (idx.length >= 2) {
         R.grid[idx[0]] = l + 1; R.grid[idx[1]] = 0;
@@ -108,8 +110,8 @@ function simulate(profile, trial) {
       for (let t = 0, len = Math.round(between(PLAYER.sessionMinutes) * 60); t < len; t++) {
         const g = income(); R.coins += g; R.runEarned += g;
         if (R.grid.slice(0, cells()).includes(0) && ++R.spawnT >= interval()) { R.spawnT = 0; put(spawnLvl()); }
-        if (turbo > 0) { turbo--; for (let k = 0; k < 1 / CFG.shop.turbo.interval; k++) mergeOne(); }
-        else if (P.perks.robot && ++R.robotT >= CFG.shop.robot.intervals[P.perks.robot - 1]) { R.robotT = 0; mergeOne(); }
+        if (turbo > 0) { turbo--; for (let k = 0; k < 1 / CFG.shop.turbo.interval; k++) mergeOne(true); }
+        else if (P.perks.robot && ++R.robotT >= CFG.shop.robot.intervals[P.perks.robot - 1]) { R.robotT = 0; mergeOne(true); }
         let acts = PLAYER.actionsPerSec;
         while (acts > 0 && mergeOne()) acts--;
         for (const u of ['mult', 'speed', 'spawn']) if (!maxed(u) && R.coins >= cost(u)) { R.coins -= cost(u); R.upg[u]++; }
@@ -121,7 +123,7 @@ function simulate(profile, trial) {
         // Con robot offline, el tablero sigue funcionando: caen objetos y el robot fusiona.
         for (let t = 0; t < off; t++) {
           const g = income() * CFG.offlineRate; R.coins += g; R.runEarned += g;
-          if (t % CFG.offlineSpawnSeconds === 0) { put(spawnLvl()); while (mergeOne()); }
+          if (t % CFG.offlineSpawnSeconds === 0) { put(spawnLvl()); while (mergeOne(true)); }
         }
       } else {
         const g = income() * off * CFG.offlineRate; R.coins += g; R.runEarned += g;
